@@ -1,0 +1,8 @@
+Symbol		: LC
+Exchange	: CME
+Market		: Live Cattle (combined)-CME
+Category	: LIVESTOCK & MEATS
+Currency	: USD
+Units		: CENTS/LB
+Point Value	: $4.00
+Contract Size	: 40000 LBS

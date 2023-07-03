@@ -1,0 +1,8 @@
+Symbol		: SF1
+Exchange	: CME
+Market		: Swiss Franc (Last in Close Field)-CME
+Category	: FOREX
+Currency	: USD
+Units		: USD / CHF
+Point Value	: USD 12.50
+Contract Size	: CHF 125000

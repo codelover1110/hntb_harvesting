@@ -1,0 +1,8 @@
+Symbol		: CL2
+Exchange	: NYMEX
+Market		: Crude Oil (combined)-NYMEX
+Category	: ENERGY
+Currency	: USD
+Units		: USD/BARREL
+Point Value	: $10
+Contract Size	: 1000 BARRELS

@@ -1,0 +1,8 @@
+Symbol		: JY1
+Exchange	: CME
+Market		: Japanese Yen (Last in Close Field)-CME
+Category	: FOREX
+Currency	: USD
+Units		: USD / 100 JPY
+Point Value	: USD 1.25
+Contract Size	: JPY 12500000

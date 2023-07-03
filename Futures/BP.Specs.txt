@@ -1,0 +1,8 @@
+Symbol		: BP
+Exchange	: CME
+Market		: British Pound (combined)-CME
+Category	: FOREX
+Currency	: USD
+Units		: USD/GBP
+Point Value	: $6.25
+Contract Size	: GBP 62500

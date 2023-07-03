@@ -1,0 +1,8 @@
+Symbol		: ZB
+Exchange	: CBT
+Market		: Treasury Bonds (Last in Close Field)-CBT
+Category	: GOVT BONDS
+Currency	: USD
+Units		: POINTS
+Point Value	: $3.125
+Contract Size	: $100000

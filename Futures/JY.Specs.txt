@@ -1,0 +1,8 @@
+Symbol		: JY
+Exchange	: CME
+Market		: Japanese Yen (combined)-CME
+Category	: FOREX
+Currency	: USD
+Units		: USD/JPY 100
+Point Value	: $1.25
+Contract Size	: JPY 12500000

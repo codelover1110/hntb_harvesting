@@ -1,0 +1,8 @@
+Symbol		: BR5
+Exchange	: CME
+Market		: Brazilian Real
+Category	: FOREX
+Currency	: USD
+Units		: USD/BRL
+Point Value	: $1.00
+Contract Size	: BRL 100000

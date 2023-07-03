@@ -1,0 +1,8 @@
+Symbol		: PA2
+Exchange	: NYMEX
+Market		: Palladium (combined)-NYMEX
+Category	: METALS
+Currency	: USD
+Units		: $/TROY OZ
+Point Value	: $1.00
+Contract Size	: 100 OZ TROY

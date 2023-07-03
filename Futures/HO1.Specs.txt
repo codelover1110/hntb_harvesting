@@ -1,0 +1,8 @@
+Symbol		: HO1
+Exchange	: NYMEX
+Market		: NY Harbor ULSD (Last in Close Field)-NYMEX
+Category	: ENERGY
+Currency	: USD
+Units		: USD/GAL
+Point Value	: $4.20
+Contract Size	: 42000 GALLONS

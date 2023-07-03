@@ -1,0 +1,8 @@
+Symbol		: SF
+Exchange	: CME
+Market		: Swiss Franc (combined)-CME
+Category	: FOREX
+Currency	: USD
+Units		: USD/CHF
+Point Value	: $12.50
+Contract Size	: CHF 125000

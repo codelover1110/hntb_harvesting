@@ -1,0 +1,8 @@
+Symbol		: SI
+Exchange	: COMEX
+Market		: Silver (RTH)-COMEX
+Category	: METALS
+Currency	: USD
+Units		: CENTS/TROY OZ
+Point Value	: $5
+Contract Size	: 5000 OZ TROY

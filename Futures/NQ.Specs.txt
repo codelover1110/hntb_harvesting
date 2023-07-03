@@ -1,0 +1,8 @@
+Symbol		: NQ
+Exchange	: CME
+Market		: e-mini Nasdaq 100 Index-CME
+Category	: INDEXES-U.S.
+Currency	: USD
+Units		: POINTS
+Point Value	: $0.20
+Contract Size	: $20 X INDEX

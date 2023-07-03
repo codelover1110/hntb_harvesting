@@ -1,0 +1,8 @@
+Symbol		: ED1
+Exchange	: CME
+Market		: Eurodollar (Last in Close Field)-CME
+Category	: INTEREST RATES
+Currency	: USD
+Units		: USD / BASIS POINT
+Point Value	: USD 2.50
+Contract Size	: USD 1000000

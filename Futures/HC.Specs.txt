@@ -1,0 +1,8 @@
+Symbol		: HC
+Exchange	: NYMEX
+Market		: Heating Oil Cr Synth-NYMEX
+Category	: ENERGY
+Currency	: USD
+Units		: USD/BARREL
+Point Value	: $10
+Contract Size	: 1000 BARRELS

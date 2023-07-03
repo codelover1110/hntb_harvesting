@@ -1,0 +1,8 @@
+Symbol		: ZM
+Exchange	: CBT
+Market		: Soybean Meal (Last in Close field)-CBT
+Category	: GRAINS & OILSEEDS
+Currency	: USD
+Units		: USD/SHORT TON
+Point Value	: $10.00
+Contract Size	: 100 SHORT TONS

@@ -1,0 +1,8 @@
+Symbol		: CT
+Exchange	: ICE-US
+Market		: Cotton #2 (RTH)
+Category	: FOOD & FIBER
+Currency	: USD
+Units		: CENTS/LB
+Point Value	: $5.00
+Contract Size	: 50000 LBS

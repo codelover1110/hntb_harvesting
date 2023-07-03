@@ -1,0 +1,8 @@
+Symbol		: FC
+Exchange	: CME
+Market		: Feeder Cattle (combined)-CME
+Category	: LIVESTOCK & MEATS
+Currency	: USD
+Units		: CENTS/LB
+Point Value	: $5.00
+Contract Size	: 50000 LBS

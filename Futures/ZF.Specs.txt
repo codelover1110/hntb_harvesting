@@ -1,0 +1,8 @@
+Symbol		: ZF
+Exchange	: CBT
+Market		: 5-Year U.S. T-Note (Last in Close Field)-CBT
+Category	: GOVT NOTES
+Currency	: USD
+Units		: POINTS
+Point Value	: $3.125
+Contract Size	: $100000

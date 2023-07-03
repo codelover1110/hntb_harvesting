@@ -1,0 +1,8 @@
+Symbol		: BO2
+Exchange	: CBT
+Market		: Soybean Oil (combined)-CBT
+Category	: GRAINS & OILSEEDS
+Currency	: USD
+Units		: CENTS/LB
+Point Value	: $6
+Contract Size	: 60000LB

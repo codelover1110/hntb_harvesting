@@ -1,0 +1,8 @@
+Symbol		: SM2
+Exchange	: CBT
+Market		: Soybean Meal (combined)-CBT
+Category	: GRAINS & OILSEEDS
+Currency	: USD
+Units		: USD/SHORT TON
+Point Value	: $10
+Contract Size	: 100 SHORT TONS

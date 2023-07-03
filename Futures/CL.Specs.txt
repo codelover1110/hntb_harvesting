@@ -1,0 +1,8 @@
+Symbol		: CL
+Exchange	: NYMEX
+Market		: Crude Oil (RTH)-NYMEX
+Category	: ENERGY
+Currency	: USD
+Units		: USD/BARREL
+Point Value	: $10
+Contract Size	: 1000 BARRELS

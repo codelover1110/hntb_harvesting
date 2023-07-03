@@ -1,0 +1,8 @@
+Symbol		: PL1
+Exchange	: NYMEX
+Market		: Platinum (Last in Close field)-NYMEX
+Category	: METALS
+Currency	: USD
+Units		: USD/OZ TROY
+Point Value	: $5.00
+Contract Size	: 50 OZ TROY

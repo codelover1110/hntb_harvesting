@@ -1,0 +1,8 @@
+Symbol		: SM
+Exchange	: CBT
+Market		: Soybean Meal (RTH)-CBT
+Category	: GRAINS & OILSEEDS
+Currency	: USD
+Units		: USD/SHORT TON
+Point Value	: $10.00
+Contract Size	: 100 SHORT TONS
