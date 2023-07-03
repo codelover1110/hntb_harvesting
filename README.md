@@ -1,4 +1,4 @@
-"# hntb_harvesting" 
+Trading || Hntb_harvesting
 
 Entry for Long
 
