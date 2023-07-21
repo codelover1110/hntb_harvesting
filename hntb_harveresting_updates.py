@@ -13,6 +13,11 @@ ProfitTaking = configur.getfloat('variables','profittaking')
 HammerBreak = configur.getfloat('variables','hammerbreak')
 folder_path = configur.get('file_path', 'folder_path')
 
+# DB info
+database = configur.get('db', 'database')
+user = configur.get('db', 'user')
+password = configur.get('db', 'password')
+
 
 pf_result = []
 futures_signals = []
@@ -27,9 +32,9 @@ def connect_db():
     conn_params = {
         "host": "localhost",
         "port": "5432",
-        "database": "hntb_1",
-        "user": "postgres",
-        "password": "12345",
+        "database": database,
+        "user": user,
+        "password": password,
         "sslmode": "prefer",
         "connect_timeout": "10"
     }

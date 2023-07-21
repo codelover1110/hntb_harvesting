@@ -6,14 +6,6 @@ import psycopg2
 import csv
 import pandas
 
-POSTGRES_USER = "postgres"
-POSTGRES_PASS = "12345"
-POSTGRES_IP = "localhost"
-POSTGRES_PORT = "5432"
-POSTGRES_DATABASE = "hntb_1"
-engine_connection = None
-engine = create_engine(f"postgresql://{POSTGRES_USER}:{POSTGRES_PASS}@{POSTGRES_IP}:{POSTGRES_PORT}/{POSTGRES_DATABASE}")
-
 from configparser import ConfigParser
   
 configur = ConfigParser()
@@ -22,6 +14,13 @@ ProfitTaking = configur.getfloat('variables','profittaking')
 HammerBreak = configur.getfloat('variables','hammerbreak')
 folder_path = configur.get('file_path', 'folder_path')
 
+POSTGRES_USER = configur.get('db', 'user')
+POSTGRES_PASS = configur.get('db', 'password')
+POSTGRES_IP = "localhost"
+POSTGRES_PORT = "5432"
+POSTGRES_DATABASE = configur.get('db', 'database')
+engine_connection = None
+engine = create_engine(f"postgresql://{POSTGRES_USER}:{POSTGRES_PASS}@{POSTGRES_IP}:{POSTGRES_PORT}/{POSTGRES_DATABASE}")
 
 def generate_ddls_future():
     # Folder Path
