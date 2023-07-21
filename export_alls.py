@@ -14,10 +14,18 @@ POSTGRES_DATABASE = "hntb_1"
 engine_connection = None
 engine = create_engine(f"postgresql://{POSTGRES_USER}:{POSTGRES_PASS}@{POSTGRES_IP}:{POSTGRES_PORT}/{POSTGRES_DATABASE}")
 
+from configparser import ConfigParser
+  
+configur = ConfigParser()
+configur.read('config.ini')
+ProfitTaking = configur.getfloat('variables','profittaking')
+HammerBreak = configur.getfloat('variables','hammerbreak')
+folder_path = configur.get('file_path', 'folder_path')
+
 
 def generate_ddls_future():
     # Folder Path
-    path = "G:/2023_anthony/hntbtrade/HNTBTrade/Futures"
+    path = f"{folder_path}/Futures"
     # Change the directory
     os.chdir(path)
     symbol, exchange, market, category, currency, units, point, contract = None, None, None, None, None, None, None, None
@@ -41,7 +49,7 @@ def generate_ddls_future():
 
 def generate_ddls_stock():
     # Folder Path
-    path = "G:/2023_anthony/hntbtrade/HNTBTrade/Stock"
+    path = f"{folder_path}/Stock"
     # Change the directory
     os.chdir(path)
   
@@ -62,10 +70,18 @@ def generate_ddls_stock():
                 df.to_csv(f"../Result/tables/{table_name}.csv", index=False)
             except:
                 pass
+
+def generate_signals():
+    for table_name in ['signals_stock', 'signals_futures']:
+        query = f'SELECT * FROM public."{table_name}"'
+        print(query)
+        df = pandas.read_sql(query, engine)
+        df.to_csv(f"{folder_path}/Result/logs/{table_name}.csv", index=False)
             
 
 
 if __name__ == '__main__':
     generate_ddls_future()
     generate_ddls_stock()
+    generate_signals()
 
