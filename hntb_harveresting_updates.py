@@ -4,6 +4,7 @@ from sqlalchemy import create_engine
 import pandas as pd
 import psycopg2
 import csv
+from export_alls import export_tables
 
 from configparser import ConfigParser
   
@@ -1079,5 +1080,6 @@ if __name__ == '__main__':
     generate_ddls_future()
     generate_ddls_stock()
     save_pf_result()
+    export_tables()
 
 

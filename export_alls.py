@@ -76,11 +76,16 @@ def generate_signals():
         print(query)
         df = pandas.read_sql(query, engine)
         df.to_csv(f"{folder_path}/Result/logs/{table_name}.csv", index=False)
-            
 
-
-if __name__ == '__main__':
+def export_tables():
     generate_ddls_future()
     generate_ddls_stock()
     generate_signals()
+            
+
+
+# if __name__ == '__main__':
+#     generate_ddls_future()
+#     generate_ddls_stock()
+#     generate_signals()
 
