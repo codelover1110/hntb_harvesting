@@ -7,6 +7,10 @@ import csv
 from export_alls import export_tables
 
 from configparser import ConfigParser
+
+from datetime import date
+
+today = date.today()
   
 configur = ConfigParser()
 configur.read('config.ini')
@@ -21,12 +25,20 @@ password = configur.get('db', 'password')
 
 
 pf_result = []
+today_pf_result = []
 futures_signals = []
 stock_signals = []
 
 def save_pf_result():
     with open(f'{folder_path}/result/logs/logs_signal.txt', 'w') as f:
         f.write('\n'.join(pf_result))
+
+def save_today_pf_result():
+    with open(f'{folder_path}/result/logs/today_logs_signal.txt', 'w') as f:
+        if len(today_pf_result) > 0:
+            f.write('\n'.join(today_pf_result))
+        else:
+            f.write('No Signals Today')
 
 def connect_db():
     # Set up the connection parameters
@@ -183,12 +195,14 @@ def generate_ddls_future():
             stop3 = [None, None]
             entryprice3 = [None, None]
             c1_c5 = [None, None]
+            decision_number = [None, None]
 
 
             for i in range(2, len(df['o'])):
             ###################################   
             # (Type 1) – Long Term Trend
             ###################################
+                decision_where = None
                
                 # EntryPrice Calculation
                 if eo1[i-1] == 'enterL1' or eo1[i-1] == 'enterS1':
@@ -214,15 +228,19 @@ def generate_ddls_future():
                         state1.append('Long1')
                         pf_result.append(f"{table_name}: Trigger Type1 vs Long1, close = {df['c'][i]}, datetime = {df['date'][i]}")
                         print(f"{table_name}: Trigger Type1 vs Long1, datetime = {df['date'][i]}")
+                        decision_where = 1
+                        if today == df['date'][i]:
+                            today_pf_result.append(f"{table_name}: Trigger Type1 vs Long1, close = {df['c'][i]}, datetime = {df['date'][i]}")
                         futures_signals.append({
                             "symbol": symbol,
                             "date": df['date'][i],
                             "close": df['c'][i],
-                            # "entryprice": entryprice1[i-1],
+                            "entryprice": entryprice1[i],
                             "type": type1[i],
                             "eo": eo1[i],
                             "state": state1[i],
-                            # "stop": None
+                            "stop": None,
+                            "decision_number": decision_where
                         })
                     else:
                         eo1.append(None)
@@ -239,15 +257,19 @@ def generate_ddls_future():
                         state1.append('Short1')
                         pf_result.append(f"{table_name}: Trigger Type1 vs Short1, close = {df['c'][i]}, datetime = {df['date'][i]}")
                         print((f"{table_name}: Trigger Type1 vs Short1, datetime = {df['date'][i]}"))
+                        if today == df['date'][i]:
+                            today_pf_result.append(f"{table_name}: Trigger Type1 vs Short1, close = {df['c'][i]}, datetime = {df['date'][i]}")
+                        decision_where = 1.1
                         futures_signals.append({
                             "symbol": symbol,
                             "date": df['date'][i],
                             "close": df['c'][i],
-                            # "entryprice": entryprice1[i-1],
+                            "entryprice": entryprice1[i],
                             "type": type1[i],
                             "eo": eo1[i],
                             "state": state1[i],
-                            # "stop": None
+                            "stop": None,
+                            "decision_number": decision_where
                         })
                     else:
                         eo1.append(None)
@@ -266,15 +288,19 @@ def generate_ddls_future():
                         entryprice1.append(None)
                         pf_result.append(f"{table_name}: Trigger Type1 vs Long1 vs exitL1, close = {df['c'][i]}, datetime = {df['date'][i]}")
                         print((f"{table_name}: Trigger Type1 vs Long1 vs exitL1, datetime = {df['date'][i]}"))
+                        if today == df['date'][i]:
+                            today_pf_result.append(f"{table_name}: Trigger Type1 vs Long1 vs exitL1, close = {df['c'][i]}, datetime = {df['date'][i]}")
+                        decision_where = 1.2
                         futures_signals.append({
                             "symbol": symbol,
                             "date": df['date'][i],
                             "close": df['c'][i],
-                            # "entryprice": entryprice1[i-1],
+                            "entryprice": entryprice1[i],
                             "type": type1[i],
                             "eo": eo1[i],
                             "state": state1[i],
-                            # "stop": None
+                            "stop": None,
+                            "decision_number": decision_where
                         })
                     else:
                         type1.append(None)
@@ -294,15 +320,19 @@ def generate_ddls_future():
                         entryprice1.append(None)
                         pf_result.append(f"{table_name}: Trigger Type1 vs Short1 vs exitL1, close = {df['c'][i]}, datetime = {df['date'][i]}")
                         print(f"{table_name}: Trigger Type1 vs Short1 vs exitL1, datetime = {df['date'][i]}")
+                        if today == df['date'][i]:
+                            today_pf_result.append(f"{table_name}: Trigger Type1 vs Short1 vs exitL1, close = {df['c'][i]}, datetime = {df['date'][i]}")
+                        decision_where = 1.3
                         futures_signals.append({
                             "symbol": symbol,
                             "date": df['date'][i],
                             "close": df['c'][i],
-                            # "entryprice": entryprice1[i-1],
+                            "entryprice": entryprice1[i],
                             "type": type1[i],
                             "eo": eo1[i],
                             "state": state1[i],
-                            # "stop": None
+                            "stop": None,
+                            "decision_number": decision_where
                         })
                     else:
                         type1.append(None)
@@ -351,16 +381,19 @@ def generate_ddls_future():
 
                     pf_result.append(f"{table_name}: Trigger Type2 vs enterL2, close = {df['c'][i]}, datetime = {df['date'][i]}")
                     print(f"{table_name}: Trigger Type2 vs enterL2, datetime = {df['date'][i]}")
-
+                    if today == df['date'][i]:
+                        today_pf_result.append(f"{table_name}: Trigger Type2 vs enterL2, close = {df['c'][i]}, datetime = {df['date'][i]}")
+                    decision_where = 1.4
                     futures_signals.append({
                             "symbol": symbol,
                             "date": df['date'][i],
                             "close": df['c'][i],
-                            # "entryprice": entryprice2[i-1],
+                            "entryprice": entryprice2[i],
                             "type": type2[i],
                             "eo": eo2[i],
                             "state": state2[i],
-                            # "stop": stop2[i]
+                            "stop": stop2[i],
+                            "decision_number": decision_where
                         })
 
                     # print('type2.append("Long2")', table_name)
@@ -381,16 +414,19 @@ def generate_ddls_future():
                     # print('type2.append("Short2")', table_name)
                     pf_result.append(f"{table_name}: Trigger Type2 vs enterS2, close = {df['c'][i]}, datetime = {df['date'][i]}")
                     print(f"{table_name}: Trigger Type2 vs enterS2, datetime = {df['date'][i]}")
-
+                    if today == df['date'][i]:
+                        today_pf_result.append(f"{table_name}: Trigger Type2 vs enterS2, close = {df['c'][i]}, datetime = {df['date'][i]}")
+                    decision_where = 1.5
                     futures_signals.append({
                         "symbol": symbol,
                         "date": df['date'][i],
                         "close": df['c'][i],
-                        # "entryprice": entryprice2[i-1],
+                        "entryprice": entryprice2[i],
                         "type": type2[i],
                         "eo": eo2[i],
                         "state": state2[i],
-                        # "stop": stop2[i]
+                        "stop": stop2[i],
+                        "decision_number": decision_where
                     })
 
                 
@@ -412,16 +448,19 @@ def generate_ddls_future():
                             stop2.append(stop2[i-1])
                         entryprice2.pop()
                         entryprice2.append(None)
-
+                        if today == df['date'][i]:
+                            today_pf_result.append(f"{table_name}: Trigger Type2 vs Long2 vs exitL2, close = {df['c'][i]}, datetime = {df['date'][i]}")
+                        decision_where = 1.6
                         futures_signals.append({
                             "symbol": symbol,
                             "date": df['date'][i],
                             "close": df['c'][i],
-                            # "entryprice": entryprice2[i-1],
+                            "entryprice": entryprice2[i],
                             "type": type2[i],
                             "eo": eo2[i],
                             "state": state2[i],
-                            # "stop": stop2[i]
+                            "stop": stop2[i],
+                            "decision_number": decision_where
                         })
                     else:
                         type2.append(None)
@@ -449,15 +488,20 @@ def generate_ddls_future():
                         entryprice2.pop()
                         entryprice2.append(None)
 
+                        if today == df['date'][i]:
+                            today_pf_result.append(f"{table_name}: Trigger Type2 vs Short2 vs exitS2, close = {df['c'][i]}, datetime = {df['date'][i]}")
+
+                        decision_where = 1.7
                         futures_signals.append({
                             "symbol": symbol,
                             "date": df['date'][i],
                             "close": df['c'][i],
-                            # "entryprice": entryprice2[i-1],
+                            "entryprice": entryprice2[i],
                             "type": type2[i],
                             "eo": eo2[i],
                             "state": state2[i],
-                            # "stop": stop2[i]
+                            "stop": stop2[i],
+                            "decision_number": decision_where
                         })
                     else:
                         type2.append(None)
@@ -496,15 +540,20 @@ def generate_ddls_future():
                     entryprice3.pop()
                     entryprice3.append(None)
 
+                    if today == df['date'][i]:
+                        today_pf_result.append(f"{table_name}: Trigger Type3 vs Short3 vs exitS3, close = {df['c'][i]}, datetime = {df['date'][i]}")
+
+                    decision_where = 1.8
                     futures_signals.append({
                             "symbol": symbol,
                             "date": df['date'][i],
                             "close": df['c'][i],
-                            # "entryprice": entryprice3[i-1],
+                            "entryprice": entryprice3[i],
                             "type": type3[i],
                             "eo": eo3[i],
                             "state": state3[i],
-                            # "stop": stop3[i]
+                            "stop": stop3[i],
+                            "decision_number": decision_where
                         })
                     
                 elif ((state1[i] == 'Short1' or state2[i] == 'Short2')
@@ -516,15 +565,21 @@ def generate_ddls_future():
                     pf_result.append(f"{table_name}: Trigger Type3 vs Long3 vs exitL3, close = {df['c'][i]}, datetime = {df['date'][i]}")
                     entryprice3.pop()
                     entryprice3.append(None)
+
+                    if today == df['date'][i]:
+                        today_pf_result.append(f"{table_name}: Trigger Type3 vs Long3 vs exitL3, close = {df['c'][i]}, datetime = {df['date'][i]}")
+
+                    decision_where = 1.9
                     futures_signals.append({
                             "symbol": symbol,
                             "date": df['date'][i],
                             "close": df['c'][i],
-                            # "entryprice": entryprice3[i-1],
+                            "entryprice": entryprice3[i],
                             "type": type3[i],
                             "eo": eo3[i],
                             "state": state3[i],
-                            # "stop": stop3[i]
+                            "stop": stop3[i],
+                            "decision_number": decision_where
                         })
                 
                 # Second, check for LongEntry3
@@ -545,15 +600,20 @@ def generate_ddls_future():
                     pf_result.append(f"{table_name}: Trigger Type3 vs enterL3, close = {df['c'][i]}, datetime = {df['date'][i]}")
                     print(f"{table_name}: Trigger Type3 vs enterL3, datetime = {df['date'][i]}")
 
+                    if today == df['date'][i]:
+                        today_pf_result.append(f"{table_name}: Trigger Type3 vs enterL3, close = {df['c'][i]}, datetime = {df['date'][i]}")
+
+                    decision_where = 2.0
                     futures_signals.append({
                             "symbol": symbol,
                             "date": df['date'][i],
                             "close": df['c'][i],
-                            # "entryprice": entryprice3[i-1],
+                            "entryprice": entryprice3[i],
                             "type": type3[i],
                             "eo": eo3[i],
                             "state": state3[i],
-                            # "stop": stop3[i]
+                            "stop": stop3[i],
+                            "decision_number": decision_where
                         })
                 
                 # Third Check for ShortEntry3
@@ -574,15 +634,20 @@ def generate_ddls_future():
                     pf_result.append(f"{table_name}: Trigger Type3 vs enterS3, close = {df['c'][i]}, datetime = {df['date'][i]}")
                     print(f"{table_name}: Trigger Type3 vs enterS3, datetime = {df['date'][i]}")
 
+                    if today == df['date'][i]:
+                        today_pf_result.append(f"{table_name}: Trigger Type3 vs enterS3, close = {df['c'][i]}, datetime = {df['date'][i]}")
+
+                    decision_where = 2.1
                     futures_signals.append({
                             "symbol": symbol,
                             "date": df['date'][i],
                             "close": df['c'][i],
-                            # "entryprice": entryprice3[i-1],
+                            "entryprice": entryprice3[i],
                             "type": type3[i],
                             "eo": eo3[i],
                             "state": state3[i],
-                            # "stop": stop3[i]
+                            "stop": stop3[i],
+                            "decision_number": decision_where
                         })
                 
                 # Fouth, check for LongExit3
@@ -602,15 +667,20 @@ def generate_ddls_future():
                     entryprice3.pop()
                     entryprice3.append(None)
 
+                    if today == df['date'][i]:
+                        today_pf_result.append(f"{table_name}: Trigger Type3 vs exitL3, close = {df['c'][i]}, datetime = {df['date'][i]}")
+
+                    decision_where = 2.2
                     futures_signals.append({
                             "symbol": symbol,
                             "date": df['date'][i],
                             "close": df['c'][i],
-                            # "entryprice": entryprice3[i-1],
+                            "entryprice": entryprice3[i],
                             "type": type3[i],
                             "eo": eo3[i],
                             "state": state3[i],
-                            # "stop": stop3[i]
+                            "stop": stop3[i],
+                            "decision_number": decision_where
                         })
                 
                 
@@ -631,15 +701,20 @@ def generate_ddls_future():
                     entryprice3.pop()
                     entryprice3.append(None)
 
+                    if today == df['date'][i]:
+                        today_pf_result.append(f"{table_name}: Trigger Type3 vs Short3 vs exitS3, close = {df['c'][i]}, datetime = {df['date'][i]}")
+
+                    decision_where = 2.3
                     futures_signals.append({
                             "symbol": symbol,
                             "date": df['date'][i],
                             "close": df['c'][i],
-                            # "entryprice": entryprice3[i-1],
+                            "entryprice": entryprice3[i],
                             "type": type3[i],
                             "eo": eo3[i],
                             "state": state3[i],
-                            # "stop": stop3[i]
+                            "stop": stop3[i],
+                            "decision_number": decision_where
                         })
                 else:
                     type3.append(None)
@@ -647,6 +722,9 @@ def generate_ddls_future():
                     state3.append(state3[i-1])
                     stop3.append(None)
                 
+                decision_number.append(decision_where)
+
+            df['decision_number'] = decision_number
             df['c1_c5'] = c1_c5
             df['entryprice1'] = entryprice1
             df['eo1'] = eo1
@@ -771,10 +849,14 @@ def generate_ddls_stock():
             entryprice2 = [None, None]  
             c1_c5 = [None, None]  
 
+            decision_number = [None, None]
+
             for i in range(2, len(df['o'])):
             ###################################   
             # (Type 1) – Long Term Trend
             ###################################
+
+                decision_where = None
                
                 # EntryPrice Calculation
                 if eo1[i-1] == 'enterL1' or eo1[i-1] == 'enterS1':
@@ -801,15 +883,21 @@ def generate_ddls_stock():
                         state1.append('Long1')
                         pf_result.append(f"{table_name}: Trigger Type1 vs Long1, close = {df['c'][i]}, datetime = {df['date'][i]}")
                         print(f"{table_name}: Trigger Type1 vs Long1, datetime = {df['date'][i]}")
+
+                        if today == df['date'][i]:
+                            today_pf_result.append(f"{table_name}: Trigger Type1 vs Long1, close = {df['c'][i]}, datetime = {df['date'][i]}")
+
+                        decision_where = 10
                         stock_signals.append({
                             "symbol": symbol,
                             "date": df['date'][i],
                             "close": df['c'][i],
-                            # "entryprice": entryprice1[i-1],
+                            "entryprice": entryprice1[i],
                             "type": type1[i],
                             "eo": eo1[i],
                             "state": state1[i],
-                            # "stop": None
+                            "stop": None,
+                            "decision_number": decision_where
                         })
                     else:
                         eo1.append(None)
@@ -826,15 +914,21 @@ def generate_ddls_stock():
                         state1.append('Short1')
                         pf_result.append(f"{table_name}: Trigger Type1 vs Short1, close = {df['c'][i]}, datetime = {df['date'][i]}")
                         print((f"{table_name}: Trigger Type1 vs Short1, datetime = {df['date'][i]}"))
+
+                        if today == df['date'][i]:
+                            today_pf_result.append(f"{table_name}: Trigger Type1 vs Short1, close = {df['c'][i]}, datetime = {df['date'][i]}")
+
+                        decision_where = 10.1
                         stock_signals.append({
                             "symbol": symbol,
                             "date": df['date'][i],
                             "close": df['c'][i],
-                            # "entryprice": entryprice1[i-1],
+                            "entryprice": entryprice1[i],
                             "type": type1[i],
                             "eo": eo1[i],
                             "state": state1[i],
-                            # "stop": None
+                            "stop": None,
+                            "decision_number": decision_where
                         })
                     else:
                         eo1.append(None)
@@ -853,15 +947,19 @@ def generate_ddls_stock():
                         entryprice1.append(None)
                         pf_result.append(f"{table_name}: Trigger Type1 vs Long1 vs exitL1, close = {df['c'][i]}, datetime = {df['date'][i]}")
                         print((f"{table_name}: Trigger Type1 vs Long1 vs exitL1, datetime = {df['date'][i]}"))
+                        if today == df['date'][i]:
+                            today_pf_result.append(f"{table_name}: Trigger Type1 vs Long1 vs exitL1, close = {df['c'][i]}, datetime = {df['date'][i]}")
+                        decision_where = 10.2
                         stock_signals.append({
                             "symbol": symbol,
                             "date": df['date'][i],
                             "close": df['c'][i],
-                            # "entryprice": entryprice1[i-1],
+                            "entryprice": entryprice1[i],
                             "type": type1[i],
                             "eo": eo1[i],
                             "state": state1[i],
-                            # "stop": None
+                            "stop": None,
+                            "decision_number": decision_where
                         })
                     else:
                         type1.append(None)
@@ -881,15 +979,19 @@ def generate_ddls_stock():
                         entryprice1.append(None)
                         pf_result.append(f"{table_name}: Trigger Type1 vs Short1 vs exitL1, close = {df['c'][i]}, datetime = {df['date'][i]}")
                         print(f"{table_name}: Trigger Type1 vs Short1 vs exitL1, datetime = {df['date'][i]}")
+                        if today == df['date'][i]:
+                            today_pf_result.append(f"{table_name}: Trigger Type1 vs Short1 vs exitL1, close = {df['c'][i]}, datetime = {df['date'][i]}")
+                        decision_where = 10.3
                         stock_signals.append({
                             "symbol": symbol,
                             "date": df['date'][i],
                             "close": df['c'][i],
-                            # "entryprice": entryprice1[i-1],
+                            "entryprice": entryprice1[i],
                             "type": type1[i],
                             "eo": eo1[i],
                             "state": state1[i],
-                            # "stop": None
+                            "stop": None,
+                            "decision_number": decision_where
                         })
                     else:
                         type1.append(None)
@@ -939,15 +1041,20 @@ def generate_ddls_stock():
                     pf_result.append(f"{table_name}: Trigger Type2 vs enterL2, close = {df['c'][i]}, datetime = {df['date'][i]}")
                     print(f"{table_name}: Trigger Type2 vs enterL2, datetime = {df['date'][i]}")
 
+                    if today == df['date'][i]:
+                        today_pf_result.append(f"{table_name}: Trigger Type2 vs enterL2, close = {df['c'][i]}, datetime = {df['date'][i]}")
+
+                    decision_where = 10.4
                     stock_signals.append({
                         "symbol": symbol,
                         "date": df['date'][i],
                         "close": df['c'][i],
-                        # "entryprice": entryprice2[i-1],
+                        "entryprice": entryprice2[i],
                         "type": type2[i],
                         "eo": eo2[i],
                         "state": state2[i],
-                        # "stop": stop2[i]
+                        "stop": stop2[i],
+                        "decision_number": decision_where
                     })
 
 
@@ -970,15 +1077,20 @@ def generate_ddls_stock():
                     pf_result.append(f"{table_name}: Trigger Type2 vs enterS2, close = {df['c'][i]}, datetime = {df['date'][i]}")
                     print(f"{table_name}: Trigger Type2 vs enterS2, datetime = {df['date'][i]}")
 
+                    if today == df['date'][i]:
+                        today_pf_result.append(f"{table_name}: Trigger Type2 vs enterS2, close = {df['c'][i]}, datetime = {df['date'][i]}")
+
+                    decision_where = 10.5
                     stock_signals.append({
                         "symbol": symbol,
                         "date": df['date'][i],
                         "close": df['c'][i],
-                        # "entryprice": entryprice2[i-1],
+                        "entryprice": entryprice2[i],
                         "type": type2[i],
                         "eo": eo2[i],
                         "state": state2[i],
-                        # "stop": stop2[i]
+                        "stop": stop2[i],
+                        "decision_number": decision_where
                     })
                 
                 # Third, check for LongExit2
@@ -998,15 +1110,20 @@ def generate_ddls_stock():
                         else:
                             stop2.append(stop2[i-1])
                         
+                        if today == df['date'][i]:
+                            today_pf_result.append(f"{table_name}: Trigger Type2 vs Long2 vs exitL2, close = {df['c'][i]}, datetime = {df['date'][i]}")
+                        
+                        decision_where = 10.6
                         stock_signals.append({
                             "symbol": symbol,
                             "date": df['date'][i],
                             "close": df['c'][i],
-                            # "entryprice": entryprice2[i-1],
+                            "entryprice": entryprice2[i],
                             "type": type2[i],
                             "eo": eo2[i],
                             "state": state2[i],
-                            # "stop": stop2[i]
+                            "stop": stop2[i],
+                            "decision_number": decision_where
                         })
                     else:
                         type2.append(None)
@@ -1032,15 +1149,20 @@ def generate_ddls_stock():
                         else:
                             stop2.append(stop2[i-1])
                         
+                        if today == df['date'][i]:
+                            today_pf_result.append(f"{table_name}: Trigger Type2 vs Short2 vs exitS2, close = {df['c'][i]}, datetime = {df['date'][i]}")
+
+                        decision_where = 10.7
                         stock_signals.append({
                             "symbol": symbol,
                             "date": df['date'][i],
                             "close": df['c'][i],
-                            # "entryprice": entryprice2[i-1],
+                            "entryprice": entryprice2[i],
                             "type": type2[i],
                             "eo": eo2[i],
                             "state": state2[i],
-                            # "stop": stop2[i]
+                            "stop": stop2[i],
+                            "decision_number": decision_where
                         })
                     else:
                         type2.append(None)
@@ -1053,7 +1175,10 @@ def generate_ddls_stock():
                     eo2.append(None)
                     state2.append(state2[i-1])
                     stop2.append(None)
+                
+                decision_number.append(decision_where)
             
+            df['decision_number'] = decision_number
             df['c1_c5'] = c1_c5
             df['entryprice1'] = entryprice1
             df['eo1'] = eo1
@@ -1081,5 +1206,6 @@ if __name__ == '__main__':
     generate_ddls_stock()
     save_pf_result()
     export_tables()
+    save_today_pf_result()
 
 
