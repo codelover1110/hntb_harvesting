@@ -438,7 +438,7 @@ def generate_ddls_future():
                     else:
                         stop2.append(stop2[i-1])
 
-                    if entryprice2[i] is not None and df['c'][i] > (1+ProfitTaking) * entryprice2[i]:
+                    if entryprice2[i] is not None and df['c'][i] > (1+(ProfitTaking*2)) * entryprice2[i]:
                         type2.append('exitL2')
                         eo2.append('exitL2')
                         state2.append(None)
