@@ -13,7 +13,7 @@ from datetime import date
 today = date.today()
   
 configur = ConfigParser()
-configur.read('strategy/config.ini')
+configur.read('config.ini')
 ProfitTaking = configur.getfloat('variables','profittaking')
 HammerBreak = configur.getfloat('variables','hammerbreak')
 folder_path = configur.get('file_path', 'folder_path')

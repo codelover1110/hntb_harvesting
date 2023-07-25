@@ -9,7 +9,7 @@ import pandas
 from configparser import ConfigParser
   
 configur = ConfigParser()
-configur.read('strategy/config.ini')
+configur.read('config.ini')
 ProfitTaking = configur.getfloat('variables','profittaking')
 HammerBreak = configur.getfloat('variables','hammerbreak')
 folder_path = configur.get('file_path', 'folder_path')
