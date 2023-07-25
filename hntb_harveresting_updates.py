@@ -284,8 +284,7 @@ def generate_ddls_future():
                         type1.append('exitL1')
                         eo1.append('exitL1')
                         state1.append(None)
-                        entryprice1.pop()
-                        entryprice1.append(None)
+                        entryprice1[i] = None
                         pf_result.append(f"{table_name}: Trigger Type1 vs Long1 vs exitL1, close = {df['c'][i]}, datetime = {df['date'][i]}")
                         print((f"{table_name}: Trigger Type1 vs Long1 vs exitL1, datetime = {df['date'][i]}"))
                         if today == df['date'][i]:
@@ -316,8 +315,7 @@ def generate_ddls_future():
                         type1.append('exitL1')
                         eo1.append('exitL1')
                         state1.append(None)
-                        entryprice1.pop()
-                        entryprice1.append(None)
+                        entryprice1[i] = None
                         pf_result.append(f"{table_name}: Trigger Type1 vs Short1 vs exitL1, close = {df['c'][i]}, datetime = {df['date'][i]}")
                         print(f"{table_name}: Trigger Type1 vs Short1 vs exitL1, datetime = {df['date'][i]}")
                         if today == df['date'][i]:
@@ -331,7 +329,6 @@ def generate_ddls_future():
                             "type": type1[i],
                             "eo": eo1[i],
                             "state": state1[i],
-                            # "stop": None,
                             "decision_number": decision_where
                         })
                     else:
@@ -392,7 +389,6 @@ def generate_ddls_future():
                             "type": type2[i],
                             "eo": eo2[i],
                             "state": state2[i],
-                            # "stop": stop2[i],
                             "decision_number": decision_where
                         })
 
@@ -432,22 +428,24 @@ def generate_ddls_future():
                 
                 # Third, check for LongExit2
                 elif state2[i-1] == 'Long2':
+
+                    if (df['c'][i] > (1+(ProfitTaking/2)) * entryprice2[i]
+                        and df['c'][i-1] < (1+(ProfitTaking/2)) * entryprice2[i]):
+                        stop2.append(1+(ProfitTaking/4) * entryprice2[i])
+                    elif (df['c'][i] >= (1+(ProfitTaking/4)) * entryprice2[i]
+                        and df['c'][i-1] < (1+(ProfitTaking/4)) * entryprice2[i]):
+                        stop2.append(df['o'][i])
+                    else:
+                        stop2.append(stop2[i-1])
+
                     if entryprice2[i] is not None and df['c'][i] > (1+ProfitTaking) * entryprice2[i]:
                         type2.append('exitL2')
                         eo2.append('exitL2')
                         state2.append(None)
+                        stop2[i] = None
+                        entryprice2[i] = None
                         pf_result.append(f"{table_name}: Trigger Type2 vs Long2 vs exitL2, close = {df['c'][i]}, datetime = {df['date'][i]}")
                         print(f"{table_name}: Trigger Type2 vs Long2 vs exitL2, datetime = {df['date'][i]}")
-                        if (df['c'][i] > (1+(ProfitTaking/2)) * entryprice2[i]
-                            and df['c'][i-1] < (1+(ProfitTaking/2)) * entryprice2[i]):
-                            stop2.append(1+(ProfitTaking/4) * entryprice2[i])
-                        elif (df['c'][i] >= (1+(ProfitTaking/4)) * entryprice2[i]
-                            and df['c'][i-1] < (1+(ProfitTaking/4)) * entryprice2[i]):
-                            stop2.append(df['o'][i])
-                        else:
-                            stop2.append(stop2[i-1])
-                        entryprice2.pop()
-                        entryprice2.append(None)
                         if today == df['date'][i]:
                             today_pf_result.append(f"{table_name}: Trigger Type2 vs Long2 vs exitL2, close = {df['c'][i]}, datetime = {df['date'][i]}")
                         decision_where = 1.6
@@ -459,41 +457,18 @@ def generate_ddls_future():
                             "type": type2[i],
                             "eo": eo2[i],
                             "state": state2[i],
-                            # "stop": stop2[i],
                             "decision_number": decision_where
                         })
-                    else:
-                        type2.append(None)
-                        eo2.append(None)
-                        state2.append(state2[i-1])
-                        if stop2[i-1] is not None:
-                            stop2.append(stop2[i-1])
-                        else:
-                            stop2.append(None)
-                    
-
-                # Fourth, check for ShortExit2
-                elif state2[i-1] == 'Short2':
-                    if len(entryprice2) > 0 and entryprice2[i] is not None and df['c'][i] < (1-ProfitTaking) * entryprice2[i]:
-                        type2.append('exitS2')
-                        eo2.append('exitS2')
+                    elif stop2[i] is not None and df['c'][i] < stop2[i]:
+                        type2.append('exitStopL2')
+                        eo2.append('exitL2')
                         state2.append(None)
-                        pf_result.append(f"{table_name}: Trigger Type2 vs Short2 vs exitS2, close = {df['c'][i]}, datetime = {df['date'][i]}")
-                        print(f"{table_name}: Trigger Type2 vs Short2 vs exitS2, datetime = {df['date'][i]}")
-                        if (df['c'][i] < (1-(ProfitTaking/2)) * entryprice2[i]
-                            and df['c'][i-1] > (1-(ProfitTaking/2)) * entryprice2[i]):
-                            stop2.append(1+(ProfitTaking/4) * entryprice2[i])
-                        elif (df['c'][i] <= (1-(ProfitTaking/4)) * entryprice2[i]
-                            and df['c'][i-1] > (1-(ProfitTaking/4)) * entryprice2[i]):
-                            stop2.append(df['o'][i])
-                        else:
-                            stop2.append(stop2[i-1])
-                        entryprice2.pop()
-                        entryprice2.append(None)
-
+                        stop2[i] = None
+                        entryprice2[i] = None
+                        pf_result.append(f"{table_name}: Trigger Type2 vs Long2 vs exitStopL2, close = {df['c'][i]}, datetime = {df['date'][i]}")
+                        print(f"{table_name}: Trigger Type2 vs Long2 vs exitStopL2, datetime = {df['date'][i]}")
                         if today == df['date'][i]:
-                            today_pf_result.append(f"{table_name}: Trigger Type2 vs Short2 vs exitS2, close = {df['c'][i]}, datetime = {df['date'][i]}")
-
+                            today_pf_result.append(f"{table_name}: Trigger Type2 vs Long2 vs exitStopL2, close = {df['c'][i]}, datetime = {df['date'][i]}")
                         decision_where = 1.7
                         futures_signals.append({
                             "symbol": symbol,
@@ -503,17 +478,79 @@ def generate_ddls_future():
                             "type": type2[i],
                             "eo": eo2[i],
                             "state": state2[i],
-                            # "stop": stop2[i],
                             "decision_number": decision_where
                         })
                     else:
                         type2.append(None)
                         eo2.append(None)
                         state2.append(state2[i-1])
-                        if stop2[i-1] is not None:
-                            stop2.append(stop2[i-1])
-                        else:
-                            stop2.append(None)
+                        
+                    
+
+                # Fourth, check for ShortExit2
+                elif state2[i-1] == 'Short2':
+
+                    if (df['c'][i] < (1-(ProfitTaking/2)) * entryprice2[i]
+                        and df['c'][i-1] > (1-(ProfitTaking/2)) * entryprice2[i]):
+                        stop2.append(1+(ProfitTaking/4) * entryprice2[i])
+                    elif (df['c'][i] <= (1-(ProfitTaking/4)) * entryprice2[i]
+                        and df['c'][i-1] > (1-(ProfitTaking/4)) * entryprice2[i]):
+                        stop2.append(df['o'][i])
+                    else:
+                        stop2.append(stop2[i-1])
+
+                    if len(entryprice2) > 0 and entryprice2[i] is not None and df['c'][i] < (1-ProfitTaking) * entryprice2[i]:
+                        type2.append('exitS2')
+                        eo2.append('exitS2')
+                        state2.append(None)
+                        pf_result.append(f"{table_name}: Trigger Type2 vs Short2 vs exitS2, close = {df['c'][i]}, datetime = {df['date'][i]}")
+                        print(f"{table_name}: Trigger Type2 vs Short2 vs exitS2, datetime = {df['date'][i]}")
+                        stop2[i] = None
+                        entryprice2[i] = None
+
+                        if today == df['date'][i]:
+                            today_pf_result.append(f"{table_name}: Trigger Type2 vs Short2 vs exitS2, close = {df['c'][i]}, datetime = {df['date'][i]}")
+
+                        decision_where = 1.8
+                        futures_signals.append({
+                            "symbol": symbol,
+                            "date": df['date'][i],
+                            "close": df['c'][i],
+                            "entryprice": entryprice2[i],
+                            "type": type2[i],
+                            "eo": eo2[i],
+                            "state": state2[i],
+                            "decision_number": decision_where
+                        })
+                    elif stop2[i] is not None and df['c'][i] > stop2[i]:
+                        type2.append('exitStopS2')
+                        eo2.append('exitS2')
+                        state2.append(None)
+                        pf_result.append(f"{table_name}: Trigger Type2 vs Short2 vs exitStopS2, close = {df['c'][i]}, datetime = {df['date'][i]}")
+                        print(f"{table_name}: Trigger Type2 vs Short2 vs exitStopS2, datetime = {df['date'][i]}")
+                        stop2[i] = None
+                        entryprice2[i] = None
+
+                        if today == df['date'][i]:
+                            today_pf_result.append(f"{table_name}: Trigger Type2 vs Short2 vs exitStopS2, close = {df['c'][i]}, datetime = {df['date'][i]}")
+
+                        decision_where = 1.9
+                        futures_signals.append({
+                            "symbol": symbol,
+                            "date": df['date'][i],
+                            "close": df['c'][i],
+                            "entryprice": entryprice2[i],
+                            "type": type2[i],
+                            "eo": eo2[i],
+                            "state": state2[i],
+                            "decision_number": decision_where
+                        })
+
+                    else:
+                        type2.append(None)
+                        eo2.append(None)
+                        state2.append(state2[i-1])
+                        
                         
                 else:
                     type2.append(None)
@@ -546,13 +583,12 @@ def generate_ddls_future():
                     state3.append(None)
                     pf_result.append(f"{table_name}: Trigger Type3 vs Short3 vs exitS3, close = {df['c'][i]}, datetime = {df['date'][i]}")
                     print(f"{table_name}: Trigger Type3 vs Short3 vs exitS3, datetime = {df['date'][i]}")
-                    entryprice3.pop()
-                    entryprice3.append(None)
+                    entryprice3[i] = None
 
                     if today == df['date'][i]:
                         today_pf_result.append(f"{table_name}: Trigger Type3 vs Short3 vs exitS3, close = {df['c'][i]}, datetime = {df['date'][i]}")
 
-                    decision_where = 1.8
+                    decision_where = 2.0
                     futures_signals.append({
                             "symbol": symbol,
                             "date": df['date'][i],
@@ -561,7 +597,6 @@ def generate_ddls_future():
                             "type": type3[i],
                             "eo": eo3[i],
                             "state": state3[i],
-                            # "stop": stop3[i],
                             "decision_number": decision_where
                         })
                     
@@ -572,13 +607,12 @@ def generate_ddls_future():
                     stop3.append(stop3[i-1])
                     state3.append(None)
                     pf_result.append(f"{table_name}: Trigger Type3 vs Long3 vs exitL3, close = {df['c'][i]}, datetime = {df['date'][i]}")
-                    entryprice3.pop()
-                    entryprice3.append(None)
+                    entryprice3[i] = None
 
                     if today == df['date'][i]:
                         today_pf_result.append(f"{table_name}: Trigger Type3 vs Long3 vs exitL3, close = {df['c'][i]}, datetime = {df['date'][i]}")
 
-                    decision_where = 1.9
+                    decision_where = 2.1
                     futures_signals.append({
                             "symbol": symbol,
                             "date": df['date'][i],
@@ -587,7 +621,6 @@ def generate_ddls_future():
                             "type": type3[i],
                             "eo": eo3[i],
                             "state": state3[i],
-                            # "stop": stop3[i],
                             "decision_number": decision_where
                         })
                 
@@ -601,7 +634,6 @@ def generate_ddls_future():
                     and not isinstance(df['hammer'][i], str)
                     and df['hammer'][i] <= HammerBreak
                     and df['tRange'][i] > (df['tRange'][i-1] + df['tRange'][i-2] + df['tRange'][i-3] + df['tRange'][i-4] + df['tRange'][i-5]) / 5):
-                    # print("type3.append('Long3')", table_name)
                     type3.append('Long3')
                     eo3.append('enterL3')
                     state3.append('Long3')
@@ -612,7 +644,7 @@ def generate_ddls_future():
                     if today == df['date'][i]:
                         today_pf_result.append(f"{table_name}: Trigger Type3 vs enterL3, close = {df['c'][i]}, datetime = {df['date'][i]}")
 
-                    decision_where = 2.0
+                    decision_where = 2.2
                     futures_signals.append({
                             "symbol": symbol,
                             "date": df['date'][i],
@@ -621,7 +653,6 @@ def generate_ddls_future():
                             "type": type3[i],
                             "eo": eo3[i],
                             "state": state3[i],
-                            # "stop": stop3[i],
                             "decision_number": decision_where
                         })
                 
@@ -635,7 +666,6 @@ def generate_ddls_future():
                     and not isinstance(df['hammer'][i], str)
                     and df['hammer'][i] >= (1-HammerBreak)
                     and df['tRange'][i] > (df['tRange'][i-1] + df['tRange'][i-2] + df['tRange'][i-3] + df['tRange'][i-4] + df['tRange'][i-5]) / 5):
-                    # print("type3.append('Short3')", table_name)
                     type3.append('Short3')
                     eo3.append('enterS3')
                     state3.append('Short3')
@@ -646,73 +676,6 @@ def generate_ddls_future():
                     if today == df['date'][i]:
                         today_pf_result.append(f"{table_name}: Trigger Type3 vs enterS3, close = {df['c'][i]}, datetime = {df['date'][i]}")
 
-                    decision_where = 2.1
-                    futures_signals.append({
-                            "symbol": symbol,
-                            "date": df['date'][i],
-                            "close": df['c'][i],
-                            "entryprice": entryprice3[i],
-                            "type": type3[i],
-                            "eo": eo3[i],
-                            "state": state3[i],
-                            # "stop": stop3[i],
-                            "decision_number": decision_where
-                        })
-                
-                # Fouth, check for LongExit3
-                elif (state3[i-1] == 'Long3'
-                    and df['c'][i] > (1+(ProfitTaking/2)) * entryprice3[i]):
-                    type3.append('exitL3')
-                    eo3.append('exitL3')
-                    state3.append(None)
-                    pf_result.append(f"{table_name}: Trigger Type3 vs exitL3, close = {df['c'][i]}, datetime = {df['date'][i]}")
-                    print(f"{table_name}: Trigger Type3 vs exitL3, datetime = {df['date'][i]}")
-                    if (df['c'][i] >= (1+(ProfitTaking/4)) * entryprice3[i]
-                        and df['c'][i-1] < (1+(ProfitTaking/4)) * entryprice3[i]):
-                        stop3.append(entryprice3[i])
-                    else:
-                        stop3.append(stop3[i-1])
-                    
-                    entryprice3.pop()
-                    entryprice3.append(None)
-
-                    if today == df['date'][i]:
-                        today_pf_result.append(f"{table_name}: Trigger Type3 vs exitL3, close = {df['c'][i]}, datetime = {df['date'][i]}")
-
-                    decision_where = 2.2
-                    futures_signals.append({
-                            "symbol": symbol,
-                            "date": df['date'][i],
-                            "close": df['c'][i],
-                            "entryprice": entryprice3[i],
-                            "type": type3[i],
-                            "eo": eo3[i],
-                            "state": state3[i],
-                            # "stop": stop3[i],
-                            "decision_number": decision_where
-                        })
-                
-                
-                # Fifth, check for ShortExit3
-                elif (state3[i-1] == 'Short3'
-                    and df['c'][i-1] < (1 - (ProfitTaking/2)) * entryprice3[i]):
-                    type3.append('exitS3')
-                    eo3.append('exitS3')
-                    state3.append(None)
-                    pf_result.append(f"{table_name}: Trigger Type3 vs Short3 vs exitS3, close = {df['c'][i]}, datetime = {df['date'][i]}")
-                    print(f"{table_name}: Trigger Type3 vs Short3 vs exitS3, datetime = {df['date'][i]}")
-
-                    if (df['c'][i] <= (1-(ProfitTaking/4)) * entryprice3[i]
-                        and df['c'][i-1] > (1-(ProfitTaking/4)) * entryprice3[i]):
-                        stop3.append(entryprice3[i])
-                    else:
-                        stop3.append(stop3[i-1])
-                    entryprice3.pop()
-                    entryprice3.append(None)
-
-                    if today == df['date'][i]:
-                        today_pf_result.append(f"{table_name}: Trigger Type3 vs Short3 vs exitS3, close = {df['c'][i]}, datetime = {df['date'][i]}")
-
                     decision_where = 2.3
                     futures_signals.append({
                             "symbol": symbol,
@@ -722,17 +685,135 @@ def generate_ddls_future():
                             "type": type3[i],
                             "eo": eo3[i],
                             "state": state3[i],
-                            # "stop": stop3[i],
                             "decision_number": decision_where
                         })
+                
+                # Fouth, check for LongExit3
+                elif state3[i-1] == 'Long3':
+                    if (df['c'][i] >= (1+(ProfitTaking/4)) * entryprice3[i]
+                        and df['c'][i-1] < (1+(ProfitTaking/4)) * entryprice3[i]):
+                        stop3.append(entryprice3[i])
+                    else:
+                        stop3.append(stop3[i-1])
+
+                    if entryprice3[i] is not None and df['c'][i] > (1+(ProfitTaking/2)) * entryprice3[i]:
+                        type3.append('exitL3')
+                        eo3.append('exitL3')
+                        state3.append(None)
+                        pf_result.append(f"{table_name}: Trigger Type3 vs exitL3, close = {df['c'][i]}, datetime = {df['date'][i]}")
+                        print(f"{table_name}: Trigger Type3 vs exitL3, datetime = {df['date'][i]}")
+                        stop3[i] = None
+                        entryprice3[i] = None
+
+                        if today == df['date'][i]:
+                            today_pf_result.append(f"{table_name}: Trigger Type3 vs exitL3, close = {df['c'][i]}, datetime = {df['date'][i]}")
+
+                        decision_where = 2.4
+                        futures_signals.append({
+                                "symbol": symbol,
+                                "date": df['date'][i],
+                                "close": df['c'][i],
+                                "entryprice": entryprice3[i],
+                                "type": type3[i],
+                                "eo": eo3[i],
+                                "state": state3[i],
+                                "decision_number": decision_where
+                            })
+                    elif stop3[i] is not None and df['c'][i] < stop3[i]:
+                        type3.append('exitStopL3')
+                        eo3.append('exitL3')
+                        state3.append(None)
+                        pf_result.append(f"{table_name}: Trigger Type3 vs exitStopL3, close = {df['c'][i]}, datetime = {df['date'][i]}")
+                        print(f"{table_name}: Trigger Type3 vs exitStopL3, datetime = {df['date'][i]}")
+                        stop3[i] = None
+                        entryprice3[i] = None
+
+                        if today == df['date'][i]:
+                            today_pf_result.append(f"{table_name}: Trigger Type3 vs exitStopL3, close = {df['c'][i]}, datetime = {df['date'][i]}")
+
+                        decision_where = 2.5
+                        futures_signals.append({
+                                "symbol": symbol,
+                                "date": df['date'][i],
+                                "close": df['c'][i],
+                                "entryprice": entryprice3[i],
+                                "type": type3[i],
+                                "eo": eo3[i],
+                                "state": state3[i],
+                                "decision_number": decision_where
+                            })
+                    else:
+                        type3.append(None)
+                        eo3.append(None)
+                        state3.append(state3[i-1])
+                
+                
+                # Fifth, check for ShortExit3
+                elif state3[i-1] == 'Short3':
+                    if (df['c'][i] <= (1-(ProfitTaking/4)) * entryprice3[i]
+                        and df['c'][i-1] > (1-(ProfitTaking/4)) * entryprice3[i]):
+                        stop3.append(entryprice3[i])
+                    else:
+                        stop3.append(stop3[i-1])
+
+                    if entryprice3[i] is not None and df['c'][i-1] < (1 - (ProfitTaking/2)) * entryprice3[i]:
+                        type3.append('exitS3')
+                        eo3.append('exitS3')
+                        state3.append(None)
+                        pf_result.append(f"{table_name}: Trigger Type3 vs Short3 vs exitS3, close = {df['c'][i]}, datetime = {df['date'][i]}")
+                        print(f"{table_name}: Trigger Type3 vs Short3 vs exitS3, datetime = {df['date'][i]}")
+
+                        stop3[i] = None
+                        entryprice3[i] = None
+
+                        if today == df['date'][i]:
+                            today_pf_result.append(f"{table_name}: Trigger Type3 vs Short3 vs exitS3, close = {df['c'][i]}, datetime = {df['date'][i]}")
+
+                        decision_where = 2.6
+                        futures_signals.append({
+                                "symbol": symbol,
+                                "date": df['date'][i],
+                                "close": df['c'][i],
+                                "entryprice": entryprice3[i],
+                                "type": type3[i],
+                                "eo": eo3[i],
+                                "state": state3[i],
+                                # "stop": stop3[i],
+                                "decision_number": decision_where
+                            })
+                    elif stop3[i] is not None and df['c'][i] > stop3[i]:
+                        type3.append('exitStopS3')
+                        eo3.append('exitS3')
+                        state3.append(None)
+                        pf_result.append(f"{table_name}: Trigger Type3 vs Short3 vs exitStopS3, close = {df['c'][i]}, datetime = {df['date'][i]}")
+                        print(f"{table_name}: Trigger Type3 vs Short3 vs exitStopS3, datetime = {df['date'][i]}")
+
+                        stop3[i] = None
+                        entryprice3[i] = None
+
+                        if today == df['date'][i]:
+                            today_pf_result.append(f"{table_name}: Trigger Type3 vs Short3 vs exitStopS3, close = {df['c'][i]}, datetime = {df['date'][i]}")
+
+                        decision_where = 2.7
+                        futures_signals.append({
+                                "symbol": symbol,
+                                "date": df['date'][i],
+                                "close": df['c'][i],
+                                "entryprice": entryprice3[i],
+                                "type": type3[i],
+                                "eo": eo3[i],
+                                "state": state3[i],
+                                "decision_number": decision_where
+                            })
+                    else:
+                        type3.append(None)
+                        eo3.append(None)
+                        state3.append(state3[i-1])
                 else:
                     type3.append(None)
                     eo3.append(None)
                     state3.append(state3[i-1])
-                    if stop3[i-1] is not None:
-                        stop3.append(stop3[i-1])
-                    else:
-                        stop3.append(None)
+                    stop3.append(stop3[i-1])
                 
                 decision_number.append(decision_where)
 
@@ -941,7 +1022,6 @@ def generate_ddls_stock():
                             "type": type1[i],
                             "eo": eo1[i],
                             "state": state1[i],
-                            # "stop": None,
                             "decision_number": decision_where
                         })
                     else:
@@ -957,8 +1037,7 @@ def generate_ddls_stock():
                         type1.append('exitL1')
                         eo1.append('exitL1')
                         state1.append(None)
-                        entryprice1.pop()
-                        entryprice1.append(None)
+                        entryprice1[i] = None
                         pf_result.append(f"{table_name}: Trigger Type1 vs Long1 vs exitL1, close = {df['c'][i]}, datetime = {df['date'][i]}")
                         print((f"{table_name}: Trigger Type1 vs Long1 vs exitL1, datetime = {df['date'][i]}"))
                         if today == df['date'][i]:
@@ -972,7 +1051,6 @@ def generate_ddls_stock():
                             "type": type1[i],
                             "eo": eo1[i],
                             "state": state1[i],
-                            # "stop": None,
                             "decision_number": decision_where
                         })
                     else:
@@ -989,8 +1067,7 @@ def generate_ddls_stock():
                         type1.append('exitL1')
                         eo1.append('exitL1')
                         state1.append(None)
-                        entryprice1.pop()
-                        entryprice1.append(None)
+                        entryprice1[i] = None
                         pf_result.append(f"{table_name}: Trigger Type1 vs Short1 vs exitL1, close = {df['c'][i]}, datetime = {df['date'][i]}")
                         print(f"{table_name}: Trigger Type1 vs Short1 vs exitL1, datetime = {df['date'][i]}")
                         if today == df['date'][i]:
@@ -1004,7 +1081,6 @@ def generate_ddls_stock():
                             "type": type1[i],
                             "eo": eo1[i],
                             "state": state1[i],
-                            # "stop": None,
                             "decision_number": decision_where
                         })
                     else:
@@ -1067,7 +1143,6 @@ def generate_ddls_stock():
                         "type": type2[i],
                         "eo": eo2[i],
                         "state": state2[i],
-                        # "stop": stop2[i],
                         "decision_number": decision_where
                     })
 
@@ -1103,26 +1178,28 @@ def generate_ddls_stock():
                         "type": type2[i],
                         "eo": eo2[i],
                         "state": state2[i],
-                        # "stop": stop2[i],
                         "decision_number": decision_where
                     })
                 
                 # Third, check for LongExit2
                 elif state2[i-1] == 'Long2':
+                    if (df['c'][i] > (1+(ProfitTaking/2)) * entryprice2[i]
+                        and df['c'][i-1] < (1+(ProfitTaking/2)) * entryprice2[i]):
+                        stop2.append(1+(ProfitTaking/4) * entryprice2[i])
+                    elif (df['c'][i] >= (1+(ProfitTaking/4)) * entryprice2[i]
+                        and df['c'][i-1] < (1+(ProfitTaking/4)) * entryprice2[i]):
+                        stop2.append(df['o'][i])
+                    else:
+                        stop2.append(stop2[i-1])
+
                     if entryprice2[i] is not None and df['c'][i] > (1+ProfitTaking) * entryprice2[i]:
                         type2.append('exitL2')
                         eo2.append('exitL2')
                         state2.append(None)
                         pf_result.append(f"{table_name}: Trigger Type2 vs Long2 vs exitL2, close = {df['c'][i]}, datetime = {df['date'][i]}")
                         print(f"{table_name}: Trigger Type2 vs Long2 vs exitL2, datetime = {df['date'][i]}")
-                        if (df['c'][i] > (1+(ProfitTaking/2)) * entryprice2[i]
-                            and df['c'][i-1] < (1+(ProfitTaking/2)) * entryprice2[i]):
-                            stop2.append(1+(ProfitTaking/4) * entryprice2[i])
-                        elif (df['c'][i] >= (1+(ProfitTaking/4)) * entryprice2[i]
-                            and df['c'][i-1] < (1+(ProfitTaking/4)) * entryprice2[i]):
-                            stop2.append(df['o'][i])
-                        else:
-                            stop2.append(stop2[i-1])
+                        entryprice2[i] = None
+                        stop2[i] = None
                         
                         if today == df['date'][i]:
                             today_pf_result.append(f"{table_name}: Trigger Type2 vs Long2 vs exitL2, close = {df['c'][i]}, datetime = {df['date'][i]}")
@@ -1136,40 +1213,85 @@ def generate_ddls_stock():
                             "type": type2[i],
                             "eo": eo2[i],
                             "state": state2[i],
-                            # "stop": stop2[i],
                             "decision_number": decision_where
                         })
+                    elif stop2[i] is not None and df['c'][i] < stop2[i]:
+                        type2.append('exitStopL2')
+                        eo2.append('exitL2')
+                        state2.append(None)
+                        pf_result.append(f"{table_name}: Trigger Type2 vs Long2 vs exitStopL2, close = {df['c'][i]}, datetime = {df['date'][i]}")
+                        print(f"{table_name}: Trigger Type2 vs Long2 vs exitStopL2, datetime = {df['date'][i]}")
+                        entryprice2[i] = None
+                        stop2[i] = None
+                        
+                        if today == df['date'][i]:
+                            today_pf_result.append(f"{table_name}: Trigger Type2 vs Long2 vs exitStopL2, close = {df['c'][i]}, datetime = {df['date'][i]}")
+                        
+                        decision_where = 10.7
+                        stock_signals.append({
+                            "symbol": symbol,
+                            "date": df['date'][i],
+                            "close": df['c'][i],
+                            "entryprice": entryprice2[i],
+                            "type": type2[i],
+                            "eo": eo2[i],
+                            "state": state2[i],
+                            "decision_number": decision_where
+                        })
+
                     else:
                         type2.append(None)
                         eo2.append(None)
                         state2.append(state2[i-1])
-                        if stop2[i-1] is not None:
-                            stop2.append(stop2[i-1])
-                        else:
-                           stop2.append(None)
                     
 
                 # Fourth, check for ShortExit2
                 elif state2[i-1] == 'Short2':
+                    if (df['c'][i] < (1-(ProfitTaking/2)) * entryprice2[i]
+                        and df['c'][i-1] > (1-(ProfitTaking/2)) * entryprice2[i]):
+                        stop2.append(1+(ProfitTaking/4) * entryprice2[i])
+                    elif (df['c'][i] <= (1-(ProfitTaking/4)) * entryprice2[i]
+                        and df['c'][i-1] > (1-(ProfitTaking/4)) * entryprice2[i]):
+                        stop2.append(df['o'][i])
+                    else:
+                        stop2.append(stop2[i-1])
+
                     if entryprice2[i] is not None and df['c'][i] < (1-ProfitTaking) * entryprice2[i]:
                         type2.append('exitS2')
                         eo2.append('exitS2')
                         state2.append(None)
                         pf_result.append(f"{table_name}: Trigger Type2 vs Short2 vs exitS2, close = {df['c'][i]}, datetime = {df['date'][i]}")
                         print(f"{table_name}: Trigger Type2 vs Short2 vs exitS2, datetime = {df['date'][i]}")
-                        if (df['c'][i] < (1-(ProfitTaking/2)) * entryprice2[i]
-                            and df['c'][i-1] > (1-(ProfitTaking/2)) * entryprice2[i]):
-                            stop2.append(1+(ProfitTaking/4) * entryprice2[i])
-                        elif (df['c'][i] <= (1-(ProfitTaking/4)) * entryprice2[i]
-                            and df['c'][i-1] > (1-(ProfitTaking/4)) * entryprice2[i]):
-                            stop2.append(df['o'][i])
-                        else:
-                            stop2.append(stop2[i-1])
+                        entryprice2[i] = None
+                        stop2[i] = None
                         
                         if today == df['date'][i]:
                             today_pf_result.append(f"{table_name}: Trigger Type2 vs Short2 vs exitS2, close = {df['c'][i]}, datetime = {df['date'][i]}")
 
-                        decision_where = 10.7
+                        decision_where = 10.8
+                        stock_signals.append({
+                            "symbol": symbol,
+                            "date": df['date'][i],
+                            "close": df['c'][i],
+                            "entryprice": entryprice2[i],
+                            "type": type2[i],
+                            "eo": eo2[i],
+                            "state": state2[i],
+                            "decision_number": decision_where
+                        })
+                    elif stop2[i] is not None and df['c'][i] > stop2[i]:
+                        type2.append('exitStopS2')
+                        eo2.append('exitS2')
+                        state2.append(None)
+                        pf_result.append(f"{table_name}: Trigger Type2 vs Short2 vs exitStopS2, close = {df['c'][i]}, datetime = {df['date'][i]}")
+                        print(f"{table_name}: Trigger Type2 vs Short2 vs exitStopS2, datetime = {df['date'][i]}")
+                        entryprice2[i] = None
+                        stop2[i] = None
+                        
+                        if today == df['date'][i]:
+                            today_pf_result.append(f"{table_name}: Trigger Type2 vs Short2 vs exitStopS2, close = {df['c'][i]}, datetime = {df['date'][i]}")
+
+                        decision_where = 10.9
                         stock_signals.append({
                             "symbol": symbol,
                             "date": df['date'][i],
@@ -1185,10 +1307,6 @@ def generate_ddls_stock():
                         type2.append(None)
                         eo2.append(None)
                         state2.append(state2[i-1])
-                        if stop2[i-1] is not None:
-                            stop2.append(stop2[i-1])
-                        else:
-                            stop2.append(None)
                     
                 else:
                     type2.append(None)
