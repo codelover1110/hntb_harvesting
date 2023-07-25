@@ -466,7 +466,10 @@ def generate_ddls_future():
                         type2.append(None)
                         eo2.append(None)
                         state2.append(state2[i-1])
-                        stop2.append(None)
+                        if stop2[i-1] is not None:
+                            stop2.append(stop2[i-1])
+                        else:
+                            stop2.append(None)
                     
 
                 # Fourth, check for ShortExit2
@@ -507,13 +510,19 @@ def generate_ddls_future():
                         type2.append(None)
                         eo2.append(None)
                         state2.append(state2[i-1])
-                        stop2.append(None)
-                    
+                        if stop2[i-1] is not None:
+                            stop2.append(stop2[i-1])
+                        else:
+                            stop2.append(None)
+                        
                 else:
                     type2.append(None)
                     eo2.append(None)
                     state2.append(state2[i-1])
-                    stop2.append(None)
+                    if stop2[i-1] is not None:
+                        stop2.append(stop2[i-1])
+                    else:
+                        stop2.append(None)
                 
 
             #########################################################
@@ -720,7 +729,10 @@ def generate_ddls_future():
                     type3.append(None)
                     eo3.append(None)
                     state3.append(state3[i-1])
-                    stop3.append(None)
+                    if stop3[i-1] is not None:
+                        stop3.append(stop3[i-1])
+                    else:
+                        stop3.append(None)
                 
                 decision_number.append(decision_where)
 
@@ -1131,7 +1143,10 @@ def generate_ddls_stock():
                         type2.append(None)
                         eo2.append(None)
                         state2.append(state2[i-1])
-                        stop2.append(None)
+                        if stop2[i-1] is not None:
+                            stop2.append(stop2[i-1])
+                        else:
+                           stop2.append(None)
                     
 
                 # Fourth, check for ShortExit2
@@ -1170,13 +1185,19 @@ def generate_ddls_stock():
                         type2.append(None)
                         eo2.append(None)
                         state2.append(state2[i-1])
-                        stop2.append(None)
+                        if stop2[i-1] is not None:
+                            stop2.append(stop2[i-1])
+                        else:
+                            stop2.append(None)
                     
                 else:
                     type2.append(None)
                     eo2.append(None)
                     state2.append(state2[i-1])
-                    stop2.append(None)
+                    if stop2[i-1] is not None:
+                        stop2.append(stop2[i-1])
+                    else:
+                        stop2.append(None)
                 
                 decision_number.append(decision_where)
             
