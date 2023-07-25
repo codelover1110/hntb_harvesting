@@ -239,7 +239,7 @@ def generate_ddls_future():
                             "type": type1[i],
                             "eo": eo1[i],
                             "state": state1[i],
-                            "stop": None,
+                            # "stop": None,
                             "decision_number": decision_where
                         })
                     else:
@@ -268,7 +268,7 @@ def generate_ddls_future():
                             "type": type1[i],
                             "eo": eo1[i],
                             "state": state1[i],
-                            "stop": None,
+                            # "stop": None,
                             "decision_number": decision_where
                         })
                     else:
@@ -299,7 +299,7 @@ def generate_ddls_future():
                             "type": type1[i],
                             "eo": eo1[i],
                             "state": state1[i],
-                            "stop": None,
+                            # "stop": None,
                             "decision_number": decision_where
                         })
                     else:
@@ -331,7 +331,7 @@ def generate_ddls_future():
                             "type": type1[i],
                             "eo": eo1[i],
                             "state": state1[i],
-                            "stop": None,
+                            # "stop": None,
                             "decision_number": decision_where
                         })
                     else:
@@ -392,7 +392,7 @@ def generate_ddls_future():
                             "type": type2[i],
                             "eo": eo2[i],
                             "state": state2[i],
-                            "stop": stop2[i],
+                            # "stop": stop2[i],
                             "decision_number": decision_where
                         })
 
@@ -425,7 +425,7 @@ def generate_ddls_future():
                         "type": type2[i],
                         "eo": eo2[i],
                         "state": state2[i],
-                        "stop": stop2[i],
+                        # "stop": stop2[i],
                         "decision_number": decision_where
                     })
 
@@ -459,7 +459,7 @@ def generate_ddls_future():
                             "type": type2[i],
                             "eo": eo2[i],
                             "state": state2[i],
-                            "stop": stop2[i],
+                            # "stop": stop2[i],
                             "decision_number": decision_where
                         })
                     else:
@@ -500,7 +500,7 @@ def generate_ddls_future():
                             "type": type2[i],
                             "eo": eo2[i],
                             "state": state2[i],
-                            "stop": stop2[i],
+                            # "stop": stop2[i],
                             "decision_number": decision_where
                         })
                     else:
@@ -552,7 +552,7 @@ def generate_ddls_future():
                             "type": type3[i],
                             "eo": eo3[i],
                             "state": state3[i],
-                            "stop": stop3[i],
+                            # "stop": stop3[i],
                             "decision_number": decision_where
                         })
                     
@@ -578,7 +578,7 @@ def generate_ddls_future():
                             "type": type3[i],
                             "eo": eo3[i],
                             "state": state3[i],
-                            "stop": stop3[i],
+                            # "stop": stop3[i],
                             "decision_number": decision_where
                         })
                 
@@ -612,7 +612,7 @@ def generate_ddls_future():
                             "type": type3[i],
                             "eo": eo3[i],
                             "state": state3[i],
-                            "stop": stop3[i],
+                            # "stop": stop3[i],
                             "decision_number": decision_where
                         })
                 
@@ -646,7 +646,7 @@ def generate_ddls_future():
                             "type": type3[i],
                             "eo": eo3[i],
                             "state": state3[i],
-                            "stop": stop3[i],
+                            # "stop": stop3[i],
                             "decision_number": decision_where
                         })
                 
@@ -679,7 +679,7 @@ def generate_ddls_future():
                             "type": type3[i],
                             "eo": eo3[i],
                             "state": state3[i],
-                            "stop": stop3[i],
+                            # "stop": stop3[i],
                             "decision_number": decision_where
                         })
                 
@@ -713,7 +713,7 @@ def generate_ddls_future():
                             "type": type3[i],
                             "eo": eo3[i],
                             "state": state3[i],
-                            "stop": stop3[i],
+                            # "stop": stop3[i],
                             "decision_number": decision_where
                         })
                 else:
@@ -733,11 +733,13 @@ def generate_ddls_future():
             df['dayssince'] = dayssince
 
             df['entryprice2'] = entryprice2
+            df['stop2'] = stop2
             df['eo2'] = eo2
             df['state2'] = state2
             df['type2'] = type2
 
             df['entryprice3'] = entryprice3
+            df['stop3'] = stop3
             df['eo3'] = eo3
             df['state3'] = state3
             df['type3'] = type3
@@ -896,7 +898,7 @@ def generate_ddls_stock():
                             "type": type1[i],
                             "eo": eo1[i],
                             "state": state1[i],
-                            "stop": None,
+                            # "stop": None,
                             "decision_number": decision_where
                         })
                     else:
@@ -927,7 +929,7 @@ def generate_ddls_stock():
                             "type": type1[i],
                             "eo": eo1[i],
                             "state": state1[i],
-                            "stop": None,
+                            # "stop": None,
                             "decision_number": decision_where
                         })
                     else:
@@ -958,7 +960,7 @@ def generate_ddls_stock():
                             "type": type1[i],
                             "eo": eo1[i],
                             "state": state1[i],
-                            "stop": None,
+                            # "stop": None,
                             "decision_number": decision_where
                         })
                     else:
@@ -990,7 +992,7 @@ def generate_ddls_stock():
                             "type": type1[i],
                             "eo": eo1[i],
                             "state": state1[i],
-                            "stop": None,
+                            # "stop": None,
                             "decision_number": decision_where
                         })
                     else:
@@ -1053,7 +1055,7 @@ def generate_ddls_stock():
                         "type": type2[i],
                         "eo": eo2[i],
                         "state": state2[i],
-                        "stop": stop2[i],
+                        # "stop": stop2[i],
                         "decision_number": decision_where
                     })
 
@@ -1089,7 +1091,7 @@ def generate_ddls_stock():
                         "type": type2[i],
                         "eo": eo2[i],
                         "state": state2[i],
-                        "stop": stop2[i],
+                        # "stop": stop2[i],
                         "decision_number": decision_where
                     })
                 
@@ -1122,7 +1124,7 @@ def generate_ddls_stock():
                             "type": type2[i],
                             "eo": eo2[i],
                             "state": state2[i],
-                            "stop": stop2[i],
+                            # "stop": stop2[i],
                             "decision_number": decision_where
                         })
                     else:
@@ -1161,7 +1163,7 @@ def generate_ddls_stock():
                             "type": type2[i],
                             "eo": eo2[i],
                             "state": state2[i],
-                            "stop": stop2[i],
+                            # "stop": stop2[i],
                             "decision_number": decision_where
                         })
                     else:
@@ -1187,6 +1189,7 @@ def generate_ddls_stock():
             df['dayssince'] = dayssince
 
             df['entryprice2'] = entryprice2
+            df['stop2'] = stop2
             df['eo2'] = eo2
             df['state2'] = state2
             df['type2'] = type2
