@@ -669,7 +669,8 @@ def generate_ddls_future():
                     type3.append('Short3')
                     eo3.append('enterS3')
                     state3.append('Short3')
-                    stop3.append(df['l'][i])
+                    #stop3.append(df['l'][i])
+                    stop3.append(df['h'][i])
                     pf_result.append(f"{table_name}: Trigger Type3 vs enterS3, close = {df['c'][i]}, datetime = {df['date'][i]}")
                     print(f"{table_name}: Trigger Type3 vs enterS3, datetime = {df['date'][i]}")
 
