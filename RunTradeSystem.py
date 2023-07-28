@@ -16,6 +16,7 @@ configur = ConfigParser()
 configur.read('config.ini')
 ProfitTaking = configur.getfloat('variables','profittaking')
 HammerBreak = configur.getfloat('variables','hammerbreak')
+RelativeVolume = configur.getfloat('variables','relativevolume')
 folder_path = configur.get('file_path', 'folder_path')
 
 # DB info
@@ -1122,7 +1123,8 @@ def generate_ddls_stock():
                     and not isinstance(df['hammer'][i], str)
                     and df['hammer'][i] < HammerBreak
                     and df['direction'][i] == 0
-                    and df['rVol'][i] > 1
+                    #and df['rVol'][i] > 1
+                    and df['rVol'][i] > RelativeVolume
                     and df['v'][i] > 100000):
                     type2.append("Long2")
                     eo2.append('enterL2')
@@ -1157,7 +1159,8 @@ def generate_ddls_stock():
                     and not isinstance(df['hammer'][i], str)
                     and df['hammer'][i] < (1- HammerBreak)
                     and df['direction'][i] == 1
-                    and df['rVol'][i] > 1
+                    #and df['rVol'][i] > 1
+                    and df['rVol'][i] > RelativeVolume
                     and df['v'][i] > 100000):
                     type2.append("Short2")
                     eo2.append('enterS2')
