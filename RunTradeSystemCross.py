@@ -268,11 +268,11 @@ def generate_ddls_future():
 
                 if  decision_where is not None and decision_where > 0:
                     pf_result.append(f"{df['date'][i]}, symbol: {table_name}, Trigger: {type1[i]}, close: {df['c'][i]}")
-                    print(f"{table_name}: Trigger {type1}, datetime = {df['date'][i]}")         
+                    # print(f"{table_name}: Trigger {type1}, datetime = {df['date'][i]}")         
                     if today == df['date'][i]:
                         today_pf_result.append(f"{df['date'][i]}, symbol: {table_name}, Trigger: {type1[i]}, close: {df['c'][i]}")
                         # today_pf_result.append(f"{table_name}: Trigger {type1}, close = {df['c'][i]}, datetime = {df['date'][i]}")    
-                    print(len(type1), '---', i)       
+                    # print(len(type1), '---', i)       
                     futures_signals.append({
                         "symbol": symbol,
                         "date": df['date'][i],
@@ -283,7 +283,7 @@ def generate_ddls_future():
 
 
             df['decision_number'] = decision_where
-            print(len(type1), '---- type1', len(df['o']))
+            # print(len(type1), '---- type1', len(df['o']))
             df['type1'] = type1
 
 
@@ -397,7 +397,7 @@ def generate_ddls_stock():
             ###################################
                 decision_where = None
 
-                print(len(df['c']), '------------', (df['c']), i)
+                # print(len(df['c']), '------------', (df['c']), i)
 
                 # EntryPrice Calculation
 
@@ -458,6 +458,7 @@ def generate_ddls_stock():
                         and df['v'][i] > df['vol5ave'][i-1] * (1 + VolumeIncrease)
                         ):
                             type2.append('enterL3')
+                            print(len(type2), '------------------ enterL3 -----', df['date'][i])
                             decision_where = 13.01
 
                         elif (
@@ -477,14 +478,18 @@ def generate_ddls_stock():
             # Counter Trend System 4
             ###################################
 
-                        elif i-25 > 0:
+                        if i-25 > 0:
                             if (
                             (df['max20'][i-1] - df['c'][i-1]) / df['max20'][i-1] >= MonthChange
                             and (df['c'][i] / df['c'][i-1]) >= (1 + PriceChangeMin)
                             and (df['c'][i] / df['c'][i-1]) <= (1 + PriceChangeMax)
                             and df['v'][i] > df['vol5ave'][i-1] * (1 + VolumeIncrease)
                             ):
-                                type2.append('enterL4')
+                                if len(type2) == i + 1 and type2[i] == 'enterL3':
+                                    type2[i] = 'enterL3 enterL4'
+                                else:
+                                    type2.append('enterL4')
+                                print(len(type2), '------------------ enterL4 -----', df['date'][i])
                                 decision_where = 14.01
                             elif (
                             (df['c'][i-1] - df['min20'][i-1]) / df['min20'][i-1] >= MonthChange
@@ -501,7 +506,7 @@ def generate_ddls_stock():
 
                 if decision_where is not None and decision_where > 10:
                     pf_result.append(f"{df['date'][i]}, symbol: {table_name}, Trigger: {type2[i]}, close: {df['c'][i]}")
-                    print(f"{table_name}: Trigger {type2}, datetime = {df['date'][i]}")         
+                    # print(f"{table_name}: Trigger {type2}, datetime = {df['date'][i]}")         
                     if today == df['date'][i]:
                         today_pf_result.append(f"{df['date'][i]}, symbol: {table_name}, Trigger: {type2[i]}, close: {df['c'][i]}")
                         # today_pf_result.append(f"{table_name}: Trigger {type2}, close = {df['c'][i]}, datetime = {df['date'][i]}")           

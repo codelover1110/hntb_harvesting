@@ -484,7 +484,7 @@
 2016-05-27, symbol: stock_AGRO, Trigger: enterL1, close: 10.53
 2016-08-30, symbol: stock_AGRO, Trigger: enterL3, close: 9.37
 2016-10-28, symbol: stock_AGRO, Trigger: enterS1, close: 10.46
-2016-11-15, symbol: stock_AGRO, Trigger: enterL3, close: 10.14
+2016-11-15, symbol: stock_AGRO, Trigger: enterL3 enterL4, close: 10.14
 2016-12-01, symbol: stock_AGRO, Trigger: enterS2, close: 10.2
 2017-02-23, symbol: stock_AGRO, Trigger: enterS3, close: 11.28
 2017-03-06, symbol: stock_AGRO, Trigger: enterS1, close: 11.03
@@ -495,14 +495,14 @@
 2017-10-24, symbol: stock_AGRO, Trigger: enterL2, close: 10.04
 2018-01-29, symbol: stock_AGRO, Trigger: enterS2, close: 9.48
 2018-02-06, symbol: stock_AGRO, Trigger: enterL4, close: 8.99
-2018-04-04, symbol: stock_AGRO, Trigger: enterL3, close: 7.46
+2018-04-04, symbol: stock_AGRO, Trigger: enterL3 enterL4, close: 7.46
 2018-04-16, symbol: stock_AGRO, Trigger: enterS2, close: 7.47
 2018-05-16, symbol: stock_AGRO, Trigger: enterL1, close: 7.86
 2018-05-29, symbol: stock_AGRO, Trigger: enterS2, close: 7.51
 2018-09-13, symbol: stock_AGRO, Trigger: enterL4, close: 6.94
 2018-10-12, symbol: stock_AGRO, Trigger: enterL1, close: 7.36
 2019-01-07, symbol: stock_AGRO, Trigger: enterL1, close: 6.8
-2019-03-15, symbol: stock_AGRO, Trigger: enterL3, close: 6.61
+2019-03-15, symbol: stock_AGRO, Trigger: enterL3 enterL4, close: 6.61
 2019-04-05, symbol: stock_AGRO, Trigger: enterL3, close: 6.71
 2019-05-28, symbol: stock_AGRO, Trigger: enterL3, close: 6.34
 2019-06-13, symbol: stock_AGRO, Trigger: enterS3, close: 6.49
@@ -527,10 +527,10 @@
 2021-03-25, symbol: stock_AGRO, Trigger: enterS1, close: 7.59
 2021-05-27, symbol: stock_AGRO, Trigger: enterS3, close: 9.7
 2021-06-25, symbol: stock_AGRO, Trigger: enterS1, close: 9.71
-2021-07-26, symbol: stock_AGRO, Trigger: enterL3, close: 9.05
+2021-07-26, symbol: stock_AGRO, Trigger: enterL3 enterL4, close: 9.05
 2021-08-10, symbol: stock_AGRO, Trigger: enterL1, close: 9.57
 2021-08-13, symbol: stock_AGRO, Trigger: enterS3, close: 8.59
-2021-10-15, symbol: stock_AGRO, Trigger: enterL3, close: 8.48
+2021-10-15, symbol: stock_AGRO, Trigger: enterL3 enterL4, close: 8.48
 2021-12-15, symbol: stock_AGRO, Trigger: enterL4, close: 6.95
 2022-01-28, symbol: stock_AGRO, Trigger: enterL1, close: 7.49
 2022-04-27, symbol: stock_AGRO, Trigger: enterL4, close: 11.39
@@ -538,7 +538,7 @@
 2022-06-01, symbol: stock_AGRO, Trigger: enterS2, close: 10.26
 2022-08-10, symbol: stock_AGRO, Trigger: enterL1, close: 8.44
 2022-08-30, symbol: stock_AGRO, Trigger: enterS3, close: 9.01
-2022-09-30, symbol: stock_AGRO, Trigger: enterL3, close: 7.98
+2022-09-30, symbol: stock_AGRO, Trigger: enterL3 enterL4, close: 7.98
 2022-12-01, symbol: stock_AGRO, Trigger: enterS3, close: 7.63
 2023-01-03, symbol: stock_AGRO, Trigger: enterS3, close: 7.41
 2023-02-28, symbol: stock_AGRO, Trigger: enterS2, close: 7.96
@@ -581,6 +581,6 @@
 2023-06-30, symbol: stock_NKE, Trigger: enterS2, close: 109.63
 2023-08-07, symbol: stock_NKE, Trigger: enterL1, close: 109.74
 2023-08-10, symbol: stock_NKE, Trigger: enterS2, close: 108.3
-2023-09-29, symbol: stock_NKE, Trigger: enterL3, close: 95.3
+2023-09-29, symbol: stock_NKE, Trigger: enterL3 enterL4, close: 95.3
 2023-10-12, symbol: stock_NKE, Trigger: enterL1, close: 98.92
 2023-10-26, symbol: stock_NKE, Trigger: enterS2, close: 99.68
