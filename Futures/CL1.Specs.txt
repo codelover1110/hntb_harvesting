@@ -1,8 +1,0 @@
-Symbol		: CL1
-Exchange	: NYMEX
-Market		: Crude Oil (Last in Close field)-NYMEX
-Category	: ENERGY
-Currency	: USD
-Units		: USD/BARREL
-Point Value	: $10
-Contract Size	: 1000 BARRELS

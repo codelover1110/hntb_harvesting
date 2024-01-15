@@ -1,8 +1,0 @@
-Symbol		: ED
-Exchange	: CME
-Market		: Eurodollar (combined)-CME
-Category	: INTEREST RATES
-Currency	: USD
-Units		: USD/BAS PT
-Point Value	: $2.5
-Contract Size	: $1000000

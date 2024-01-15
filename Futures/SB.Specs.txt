@@ -1,8 +1,0 @@
-Symbol		: SB
-Exchange	: ICE-US
-Market		: Sugar #11 (World) (RTH)
-Category	: FOOD & FIBER
-Currency	: USD
-Units		: CENTS/LB
-Point Value	: $11.20
-Contract Size	: 112000 LBS

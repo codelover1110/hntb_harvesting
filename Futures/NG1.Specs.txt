@@ -1,8 +1,0 @@
-Symbol		: NG1
-Exchange	: NYMEX
-Market		: Natural Gas (Last in Close Field)-NYMEX
-Category	: ENERGY
-Currency	: USD
-Units		: USD/ MMBTU
-Point Value	: $10.00
-Contract Size	: 10000 MMBTU

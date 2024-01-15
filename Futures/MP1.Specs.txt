@@ -1,8 +1,0 @@
-Symbol		: MP1
-Exchange	: CME
-Market		: Mexican Peso (Last in Close Field)-CME
-Category	: FOREX
-Currency	: USD
-Units		: USD/MXN
-Point Value	: $5
-Contract Size	: MXN 500000
