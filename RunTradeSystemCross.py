@@ -497,7 +497,10 @@ def generate_ddls_stock():
                             and (df['c'][i-1] / df['c'][i]) <= (1 + PriceChangeMax)
                             and df['v'][i] > df['vol5ave'][i-1] * (1 + VolumeIncrease)
                             ):
-                                type2.append('enterS4')
+                                if len(type2) == i + 1 and type2[i] == 'enterS3':
+                                    type2[i] = 'enterS3 enterS4'
+                                else:
+                                    type2.append('enterS4')
                                 decision_where = 14.02      
     
 
