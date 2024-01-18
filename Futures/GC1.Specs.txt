@@ -1,8 +1,0 @@
-Symbol		: GC1
-Exchange	: CME
-Market		: Gold (Last in Close field)-COMEX
-Category	: METALS
-Currency	: USD
-Units		: $/OZ
-Point Value	: $10
-Contract Size	: 100 OZ

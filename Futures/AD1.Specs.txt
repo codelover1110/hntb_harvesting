@@ -1,8 +1,0 @@
-Symbol		: AD1
-Exchange	: CME
-Market		: Australian Dollar (Last in Close Field)-CME
-Category	: FOREX
-Currency	: USD
-Units		: USD/AUD
-Point Value	: $1
-Contract Size	: AUD100000

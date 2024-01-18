@@ -1,8 +1,0 @@
-Symbol		: CD1
-Exchange	: CME
-Market		: Canadian Dollar (Last in Close Field)-CME
-Category	: FOREX
-Currency	: USD
-Units		: USD / CAD
-Point Value	: $1
-Contract Size	: CAD 100000

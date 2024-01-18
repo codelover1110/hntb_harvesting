@@ -1,8 +1,0 @@
-Symbol		: TU2
-Exchange	: CBT
-Market		: 2-Year U.S. T-Note-(#382 w/ less precision)
-Category	: GOVT NOTES
-Currency	: USD
-Units		: POINTS
-Point Value	: $31.25
-Contract Size	: $200000

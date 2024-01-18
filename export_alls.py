@@ -10,8 +10,6 @@ from configparser import ConfigParser
   
 configur = ConfigParser()
 configur.read('config.ini')
-ProfitTaking = configur.getfloat('variables','profittaking')
-HammerBreak = configur.getfloat('variables','hammerbreak')
 folder_path = configur.get('file_path', 'folder_path')
 
 POSTGRES_USER = configur.get('db', 'user')

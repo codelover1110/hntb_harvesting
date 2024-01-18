@@ -1,8 +1,0 @@
-Symbol		: SI1
-Exchange	: COMEX
-Market		: Silver (Last in Close field)-COMEX
-Category	: METALS
-Currency	: USD
-Units		: CENTS/OZ
-Point Value	: $5
-Contract Size	: 5000 OZ

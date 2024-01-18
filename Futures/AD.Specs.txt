@@ -1,8 +1,0 @@
-Symbol		: AD
-Exchange	: CME
-Market		: Australian Dollar (combined)-CME
-Category	: FOREX
-Currency	: USD
-Units		: USD/AUD
-Point Value	: $1
-Contract Size	: AUD100000

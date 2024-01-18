@@ -1,8 +1,0 @@
-Symbol		: HO2
-Exchange	: NYMEX
-Market		: NY Harbor ULSD (combined)-NYMEX
-Category	: ENERGY
-Currency	: USD
-Units		: USD/GALLON
-Point Value	: $4.20
-Contract Size	: 42000 GALLONS

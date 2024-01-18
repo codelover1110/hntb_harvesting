@@ -1,8 +1,0 @@
-Symbol		: ZT
-Exchange	: CBT
-Market		: 2-Year U.S. T-Note (Last In Close Field)-CBT
-Category	: GOVT NOTES
-Currency	: USD
-Units		: POINTS
-Point Value	: $6.25
-Contract Size	: $200000

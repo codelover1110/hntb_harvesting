@@ -1,8 +1,0 @@
-Symbol		: KC
-Exchange	: ICE-US
-Market		: Coffee (RTH)
-Category	: FOOD & FIBER
-Currency	: USD
-Units		: CENTS/LB
-Point Value	: $3.75
-Contract Size	: 37500 LBS

@@ -1,8 +1,0 @@
-Symbol		: DX
-Exchange	: ICE-US
-Market		: U.S. Dollar Index-(RTH)-FINEX
-Category	: INDEXES-U.S.
-Currency	: USD
-Units		: POINTS
-Point Value	: $1.00
-Contract Size	: $1000 X INDEX

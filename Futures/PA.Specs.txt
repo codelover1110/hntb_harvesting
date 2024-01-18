@@ -1,8 +1,0 @@
-Symbol		: PA
-Exchange	: NYMEX
-Market		: Palladium (RTH)-NYMEX
-Category	: METALS
-Currency	: USD
-Units		: $/OZ TROY
-Point Value	: $1.00
-Contract Size	: 100 OZ TROY

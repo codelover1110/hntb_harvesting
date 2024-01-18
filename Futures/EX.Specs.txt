@@ -1,8 +1,0 @@
-Symbol		: EX
-Exchange	: CME
-Market		: e-mini Euro-CME
-Category	: FOREX
-Currency	: USD
-Units		: USD/EUR
-Point Value	: $0.625
-Contract Size	: EUR 62500

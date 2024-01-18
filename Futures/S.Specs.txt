@@ -1,8 +1,0 @@
-Symbol		: S
-Exchange	: CME
-Market		: Soybeans (RTH)-CBT
-Category	: GRAINS & OILSEEDS
-Currency	: USD
-Units		: CENTS/BU
-Point Value	: $6.25
-Contract Size	: 5000 BU

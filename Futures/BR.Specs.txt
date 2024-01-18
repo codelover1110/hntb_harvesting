@@ -1,8 +1,0 @@
-Symbol		: BR
-Exchange	: CME
-Market		: Brazilian Real (legacy version; moved to #821)
-Category	: FOREX
-Currency	: USD
-Units		: USD/BRL
-Point Value	: $10.00
-Contract Size	: BRL 100000

@@ -1,8 +1,0 @@
-Symbol		: LC1
-Exchange	: CME
-Market		: Live Cattle (ETH)
-Category	: LIVESTOCK & MEATS
-Currency	: USD
-Units		: CENTS/LB
-Point Value	: $4.00
-Contract Size	: 40000 LBS

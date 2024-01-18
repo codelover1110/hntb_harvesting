@@ -1,8 +1,0 @@
-Symbol		: ES
-Exchange	: CME
-Market		: e-mini S&P 500 Index-CME
-Category	: INDEXES-U.S.
-Currency	: USD
-Units		: POINTS
-Point Value	: $0.50
-Contract Size	: $50 X INDEX

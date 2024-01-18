@@ -1,8 +1,0 @@
-Symbol		: BP1
-Exchange	: CME
-Market		: British Pound (Last in Close Field)-CME
-Category	: FOREX
-Currency	: USD
-Units		: USD / GBP
-Point Value	: USD 6.25
-Contract Size	: GBP 62500

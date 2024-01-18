@@ -1,8 +1,0 @@
-Symbol		: TY
-Exchange	: CBT
-Market		: 10-Year U.S. T-Note (combined)-CBT
-Category	: GOVT NOTES
-Currency	: USD
-Units		: POINTS
-Point Value	: $15.625
-Contract Size	: $100000
